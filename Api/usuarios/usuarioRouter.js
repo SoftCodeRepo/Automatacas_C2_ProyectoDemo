@@ -1,16 +1,13 @@
 import { Router } from "express";
-import { getUsuario, postUsuario, putUsuario } from "./usuarioController.js";
+import { registerUsuario , loginUsuario } from "./usuarioController.js";
 
 export const usuarioRouter = Router();
 
-usuarioRouter.post("", async (req, res) => {
-    return await getUsuario(req, res);
+// Ruta para registrar un usuario (POST)
+usuarioRouter.post("/register", async (req, res) => {
+    return await registerUsuario(req, res); // Usar registerUsuario para el registro
 });
 
-usuarioRouter.post("/register", async(req, res) => {
-    return await postUsuario(req, res);
-});
-
-usuarioRouter.put("", async (req, res) => {
-    return await putUsuario(req, res); 
+usuarioRouter.post("/login", async (req, res) => {
+    return await loginUsuario(req, res);
 });
