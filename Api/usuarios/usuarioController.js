@@ -2,6 +2,7 @@ import usuarioModel from "./usuarioModel.js";
 import datosModel from "./DatosModel.js";
 
 export async function getUsuario(req, res) {
+    console.log("");
     const { nombre } = req.body;
     const usuario = await usuarioModel.findOne({ nombre: nombre });
     const datos = await datosModel.findOne({ nombreUsuario: usuario.nombre });

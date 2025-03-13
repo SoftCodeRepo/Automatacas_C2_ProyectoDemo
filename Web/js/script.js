@@ -11,7 +11,7 @@ import { patterns } from './expresiones.js';
  * @property {number?} points - Los puntos acumulados por el usuario.
  * @property {number?} failures - El número de fallos del usuario.
  * @property {Date?} lastPlayed - La última vez que el usuario jugó.
- * @property {string[]?} worldProgress - Los mundos que ha completado el usuario.
+ * @property {{tildes:boolean, consonants:boolean, vocals:boolean}?} worldProgress - Los mundos que ha completado el usuario.
  */
 
 /**
@@ -121,9 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Función para cargar datos del juego desde localStorage
-    function loadGameData() {
-      const savedData = JSON.parse(localStorage.getItem('elViajeData')) || {};
-      
+  async function loadGameData() {
+    const savedData = await getUsuario(localStorage.getItem("username")).datos || {};
+    console.info(savedData);
       if (savedData.currentWorld) {
         currentWorld = savedData.currentWorld;
         currentLevel = savedData.currentLevel || 1;
@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastPlayed: new Date().toISOString(),
         worldProgress
       };
+      putUsuario(localStorage.getItem("username"), gameData);
       
       localStorage.setItem('elViajeData', JSON.stringify(gameData));
     }
@@ -306,12 +307,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Función para resetear el progreso del juego
-    function resetGameProgress() {
+    async function resetGameProgress() {
       currentWorld = '';
       currentLevel = 1;
       points = 0;
       failures = 0;
       localStorage.removeItem('elViajeData');
+      await putUsuario(localStorage.getItem("username"), {
+        currentWorld: null,
+        currentLevel: 0,
+        points: 0,
+        failures: 0,
+        lastPlayed: null,
+        worldProgress: null
+      });
     }
     
     // Función para iniciar un mundo
@@ -481,9 +490,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Mostrar mensaje de victoria y registrar mundo completado
-    function showVictoryMessage() {
+    async function showVictoryMessage() {
       // Actualizar progreso en localStorage
-      const savedData = JSON.parse(localStorage.getItem('elViajeData')) || {};
+      const savedData = await getUsuario(localStorage.getItem("username")).datos;
+      //const savedData = JSON.parse(localStorage.getItem('elViajeData')) || {};
       const worldProgress = savedData.worldProgress || {
         vocals: false,
         consonants: false,
@@ -492,6 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       worldProgress[currentWorld] = true;
       savedData.worldProgress = worldProgress;
+      await putUsuario(localStorage.getItem("username"), savedData);
       localStorage.setItem('elViajeData', JSON.stringify(savedData));
       
       // Mostrar mensaje de victoria

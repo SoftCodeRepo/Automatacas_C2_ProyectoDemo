@@ -13,7 +13,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
             feedback.textContent = "¡Inicio de sesión exitoso!";
             feedback.style.color = "#27ae60";
             
-           
+           console.log("llega aqui a guardar username");
             localStorage.setItem('username', username);
             
             setTimeout(() => {
