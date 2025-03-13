@@ -129,7 +129,6 @@ input:focus {
     opacity: 0;
     transform: translateY(-20px);
   }
-
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -141,12 +140,10 @@ input:focus {
     transform: scale(0.8);
     opacity: 0;
   }
-
   80% {
     transform: scale(1.1);
     opacity: 1;
   }
-
   100% {
     transform: scale(1);
   }
@@ -167,8 +164,7 @@ input:focus {
     width: 100%;
   }
 
-  #pattern-description,
-  #pattern-display {
+  #pattern-description, #pattern-display {
     font-size: 1em;
   }
 }
@@ -193,40 +189,4 @@ footer {
   margin-top: 20px;
   font-size: 0.85em;
   color: #7f8c8d;
-}
-
-.shake {
-  animation: shake 0.4s ease-in-out;
-}
-
-@keyframes shake {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-10px);
-  }
-
-  50% {
-    transform: translateX(10px);
-  }
-
-  75% {
-    transform: translateX(-5px);
-  }
-}
-
-.success {
-  color: #2ecc71;
-}
-
-.error {
-  color: #e74c3c;
-}
-
-#progress {
-  transition: width 0.5s ease-in-out;
 }
