@@ -4,7 +4,8 @@ import datosModel from "./DatosModel.js";
 export async function getUsuario(req, res) {
     const { nombre } = req.body;
     const usuario = await usuarioModel.findOne({ nombre: nombre });
-    if (!usuario) {
+    const datos = await datosModel.findOne({ nombreUsuario: usuario.nombre });
+    if (!usuario || !datos) {
         return res.status(404).json({
             success: false,
             message: "no se pudo obtener el usuario requerido, probablemente no exista o ha ocurrido un error con la base de datos."
@@ -13,7 +14,8 @@ export async function getUsuario(req, res) {
     return res.status(200).json({
         success: true,
         message: "usuario obtenido con exito",
-        usuario
+        usuario,
+        datos
     });
 }
 
@@ -32,8 +34,8 @@ export async function postUsuario(req, res) {
 
 export async function putDatos(req, res) {
     try {
-        const args = req.body;
-        const nombre = args.nombre;
+        const args = req.body.args;
+        const nombre = req.body.nombre;
         
         if (!nombre) {
             return res.status(400).json({

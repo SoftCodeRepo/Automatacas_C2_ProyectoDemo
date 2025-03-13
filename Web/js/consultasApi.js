@@ -1,6 +1,9 @@
 /**
  * @typedef {Object} Usuario
- * @property {string} nombre - El nombre del usuario.
+ * @property {string} nombre
+ * 
+ * @typedef {Object} Datos
+ * @property {string} nombreUsuario - El nombre del usuario.
  * @property {string} currentWorld - El mundo actual en el que está el usuario.
  * @property {number} currentLevel - El nivel actual del usuario.
  * @property {number} points - Los puntos acumulados por el usuario.
@@ -11,7 +14,7 @@
 
 /**
  * @param {string} nombre
- * @returns {Usuario | null}
+ * @returns {{usuario:Usuario, datos:Datos, success: boolean, message: string} | null}
  */
 async function getUsuario(nombre) {
     const response = await fetch('http://localhost:9000/usuarios', {
@@ -25,7 +28,7 @@ async function getUsuario(nombre) {
         return null;
     }
     const parsedResponse = await response.json();
-    return parsedResponse.usuario;
+    return parsedResponse;
 }
 
 /**
@@ -62,7 +65,7 @@ async function putUsuario(nombre, data) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nombre, ...data })
+        body: JSON.stringify({ nombre, args: {...data} })
     });
     if (!response.ok) {
         return null;
