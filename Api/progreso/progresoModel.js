@@ -26,5 +26,5 @@ const usuarioSchema = new Schema({
   },
 });
 
-const usuarioModel = mongoose.model("usuario", usuarioSchema, "usuarios");
+const usuarioModel = mongoose.model("progreso", usuarioSchema, "progreso");
 export default usuarioModel;

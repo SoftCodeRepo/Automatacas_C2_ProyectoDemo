@@ -1,7 +1,7 @@
 import usuarioModel from "./usuarioModel.js";
 import datosModel from "./DatosModel.js";
 
-export async function registerUsuario(req, res) {
+export async function getUsuario(req, res) {
     const { nombre } = req.body;
     const usuario = await usuarioModel.findOne({ nombre: nombre });
     const datos = await datosModel.findOne({ nombreUsuario: usuario.nombre });
