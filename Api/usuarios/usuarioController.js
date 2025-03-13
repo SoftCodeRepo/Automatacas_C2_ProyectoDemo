@@ -1,4 +1,5 @@
 import usuarioModel from "./usuarioModel.js";
+import datosModel from "./DatosModel.js";
 
 export async function getUsuario(req, res) {
     const { nombre } = req.body;
@@ -17,8 +18,10 @@ export async function getUsuario(req, res) {
 }
 
 export async function postUsuario(req, res) {
-    const { nombre, currentWorld, currentLevel, points, failures, lastPlayed, worldProgress } = req.body;
-    const newUsuario = new usuarioModel({ nombre, currentWorld, currentLevel, points, failures, lastPlayed, worldProgress });
+    const { nombre } = req.body;
+    const newUsuario = new usuarioModel({ nombre });
+    const newDatos = new datosModel({ nombreUsuario: nombre });
+    await newDatos.save();
     await newUsuario.save();
     return res.status(201).json({
         success: true,
@@ -27,20 +30,44 @@ export async function postUsuario(req, res) {
     });
 }
 
-export async function putUsuario(req, res) {
-    const usuario = await usuarioModel.findOne({ nombre: nombre });
-    if (!usuario) {
-        return res.status(404).json({
+export async function putDatos(req, res) {
+    try {
+        const args = req.body;
+        const nombre = args.nombre;
+        
+        if (!nombre) {
+            return res.status(400).json({
+                success: false,
+                message: "Datos incompletos."
+            });
+        }
+
+        const datos = await datosModel.findOne({ nombreUsuario: nombre });
+        if (!datos) {
+            return res.status(404).json({
+                success: false,
+                message: "Usuario no encontrado."
+            });
+        }
+
+        Object.keys(args).forEach((key) => {
+            if (key !== "_id") { // Evita sobrescribir el ID
+                datos[key] = args[key] !== undefined ? args[key] : datos[key];
+            }
+        });
+
+        await datos.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Datos actualizados",
+            data: datos
+        });
+    } catch (error) {
+        return res.status(500).json({
             success: false,
-            message: "usuario no encontrado para modificar."
+            message: "Error interno del servidor.",
+            error: error.message
         });
     }
-    Object.entries(req.body).forEach(([key, value]) => {
-        if (value !== undefined) usuario[key] = value;
-    });
-    await usuario.save();
-    return res.status(200).json({
-        success: true,
-        message: "usuario actualizado con exito"
-    });
 }
