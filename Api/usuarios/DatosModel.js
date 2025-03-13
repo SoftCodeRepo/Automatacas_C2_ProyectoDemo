@@ -1,5 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
+const WorldProgressSchema = new Schema({
+    vocals: Schema.Types.Boolean,
+    consonants: Schema.Types.Boolean,
+    tildes: Schema.Types.Boolean
+});
+
 const datosSchema = new Schema({    
     nombreUsuario: {
         type: Schema.Types.String
@@ -20,7 +26,7 @@ const datosSchema = new Schema({
         type: Schema.Types.Date
     },
     worldProgress: {
-        type: [Schema.Types.String]
+        type: WorldProgressSchema
     }
 });
 

@@ -35,7 +35,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
 async function getUsuario(nombre) {
     try {
-        const response = await fetch('http://localhost:9000/usuarios/login', {
+        const response = await fetch('http://localhost:9000/usuarios', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
