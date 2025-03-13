@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Viaje de las Palabras</title>
+  <link rel="stylesheet" href="./css/styles.css">
+
+  <script type="module" src="./js/script.js"></script>
+</head>
+<body>
+  <div class="game-container">
+    <header>
+      <h1>El Viaje de las Palabras</h1>
+    </header>
+
+    <section id="world-selection">
+      <h2>Selecciona tu Mundo:</h2>
+      <div class="button-container">
+        <button class="world-btn" id="vocal-world">Mundo de las Vocales</button>
+        <button class="world-btn" id="consonant-world">Mundo de las Consonantes</button>
+        <button class="world-btn" id="tilde-world">Mundo de las Tildes</button>
+      </div>
+    </section>
+
+    <section id="challenge-container" class="hidden">
+      <h2 id="challenge-title">Desafío: Mundo de las Vocales</h2>
+      <p id="pattern-description">Busca palabras con al menos dos vocales (por ejemplo: "aei", "oio")</p>
+      <p id="pattern-display">^[aeiou]{2,}$</p>
+      <input type="text" id="user-input" placeholder="Escribe una palabra..." autofocus>
+      <button id="check-btn">Comprobar</button>
+      <p id="feedback"></p>
+      <p>Puntos: <span id="points">0</span></p>
+      <div id="progress-bar">
+        <div id="progress"></div>
+      </div>
+    </section>
+  </div>
+
+</body>
+
+</html>

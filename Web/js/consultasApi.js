@@ -3,13 +3,13 @@
  * @property {string} nombre
  * 
  * @typedef {Object} Datos
- * @property {string} nombreUsuario - El nombre del usuario.
- * @property {string} currentWorld - El mundo actual en el que está el usuario.
- * @property {number} currentLevel - El nivel actual del usuario.
- * @property {number} points - Los puntos acumulados por el usuario.
- * @property {number} failures - El número de fallos del usuario.
- * @property {Date} lastPlayed - La última vez que el usuario jugó.
- * @property {string[]} worldProgress - Los mundos que ha completado el usuario.
+ * @property {string?} nombreUsuario - El nombre del usuario.
+ * @property {string?} currentWorld - El mundo actual en el que está el usuario.
+ * @property {number?} currentLevel - El nivel actual del usuario.
+ * @property {number?} points - Los puntos acumulados por el usuario.
+ * @property {number?} failures - El número de fallos del usuario.
+ * @property {Date?} lastPlayed - La última vez que el usuario jugó.
+ * @property {string[]?} worldProgress - Los mundos que ha completado el usuario.
  */
 
 /**
@@ -59,7 +59,7 @@ async function postUsuario(usuario) {
  * @returns {{success:boolean, message: string} | null}
  */
 async function putUsuario(nombre, data) {
-    data = data !== undefined
+    data = data !== undefined ? data : {};
     const response = await fetch('http://localhost:9000', {
         method: 'PUT',
         headers: {

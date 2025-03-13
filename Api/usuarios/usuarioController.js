@@ -1,14 +1,14 @@
 import usuarioModel from "./usuarioModel.js";
 import datosModel from "./DatosModel.js";
 
-export async function getUsuario(req, res) {
+export async function registerUsuario(req, res) {
     const { nombre } = req.body;
     const usuario = await usuarioModel.findOne({ nombre: nombre });
     const datos = await datosModel.findOne({ nombreUsuario: usuario.nombre });
     if (!usuario || !datos) {
         return res.status(404).json({
             success: false,
-            message: "no se pudo obtener el usuario requerido, probablemente no exista o ha ocurrido un error con la base de datos."
+            message: "El nombre es requerido."
         });
     }
     return res.status(200).json({
